@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(
-        name = "reservation",
+        name = "lecture_apply",
         uniqueConstraints = @UniqueConstraint(columnNames = {"lecture_id", "student_id"}) //동일한 강의에 대한 중복 예약 방지
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
