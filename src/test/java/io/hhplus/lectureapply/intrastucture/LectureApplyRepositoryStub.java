@@ -22,6 +22,14 @@ public class LectureApplyRepositoryStub implements LectureApplyRepository {
 
     @Override
     public LectureApply save(LectureApply lectureApply) {
+        if(lectureApplies.stream()
+                .anyMatch(lectureApply1 ->
+                        lectureApply1.getParticipant().getId().equals(lectureApply.getParticipant().getId())
+                        && lectureApply1.getLecture().getId().equals(lectureApply.getLecture().getId())
+                )
+        ){
+            throw new DataIntegrityViolationException("이미 신청한 강의입니다.");
+        };
         return lectureApply;
     }
 }
