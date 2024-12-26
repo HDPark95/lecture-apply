@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface LectureRepository {
 
+    Lecture getLectureForApply(Long lectureId);
+
     List<Lecture> findAvailableLectures(LocalDate targetDate, LocalDateTime currentTime);
 
     Lecture save(Lecture lecture);

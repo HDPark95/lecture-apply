@@ -5,6 +5,7 @@ import io.hhplus.lectureapply.domain.lecture.Lecture;
 import io.hhplus.lectureapply.domain.participant.Participant;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,8 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(
-        name = "reservation",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"lecture_id", "student_id"}) //동일한 강의에 대한 중복 예약 방지
+        name = "reservation"
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -40,4 +40,13 @@ public class LectureApply extends BaseEntity {
     @Column(name = "lecture_title")
     private String lectureTitle;
 
+    @Builder
+    public LectureApply(Long id, Lecture lecture, Participant participant, LocalDateTime lectureDate, String lecturerName, String lectureTitle) {
+        this.id = id;
+        this.lecture = lecture;
+        this.participant = participant;
+        this.lectureDate = lectureDate;
+        this.lecturerName = lecturerName;
+        this.lectureTitle = lectureTitle;
+    }
 }

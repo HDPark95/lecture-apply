@@ -2,7 +2,11 @@ package io.hhplus.lectureapply.domain.lecture;
 
 
 import io.hhplus.lectureapply.domain.core.BaseEntity;
+import io.hhplus.lectureapply.domain.lectureapply.LectureApply;
+import io.hhplus.lectureapply.domain.lectureapply.LectureCapacityFullException;
+import io.hhplus.lectureapply.domain.lectureapply.LectureNotInApplyPeriodException;
 import io.hhplus.lectureapply.domain.lecturer.Lecturer;
+import io.hhplus.lectureapply.domain.participant.Participant;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -58,5 +62,22 @@ public class Lecture extends BaseEntity {
         this.applyStartDate = applyStartDate;
         this.maxParticipants = maxParticipants;
         this.currentParticipants = currentParticipants;
+    }
+
+    public LectureApply apply(Long participantId, LocalDateTime currentDateTime) {
+        if (currentParticipants >= maxParticipants) {
+            throw new LectureCapacityFullException("수강 신청 인원이 마감되었습니다.");
+        }
+        if (currentDateTime.isBefore(applyStartDate) || currentDateTime.isAfter(lectureDateTime)) {
+            throw new LectureNotInApplyPeriodException("수강 신청 기간이 아닙니다.");
+        }
+        currentParticipants++;
+        return LectureApply.builder()
+                .lecture(this)
+                .lectureDate(lectureDateTime)
+                .lecturerName(lecturer.getName())
+                .lectureTitle(title)
+                .participant(Participant.builder().id(participantId).build())
+                .build();
     }
 }

@@ -1,6 +1,7 @@
 package io.hhplus.lectureapply.intrastucture;
 
 import io.hhplus.lectureapply.domain.lecture.Lecture;
+import io.hhplus.lectureapply.domain.lecture.LectureNotFoundException;
 import io.hhplus.lectureapply.domain.lecture.LectureRepository;
 import io.hhplus.lectureapply.domain.lecturer.Lecturer;
 
@@ -13,6 +14,7 @@ public class LectureRepositoryStub implements LectureRepository {
     private final List<Lecture> lectures = List.of(
             Lecture
                     .builder()
+                    .id(1L)
                     .title("항해 토요 특강")
                     .description("멘토링 세션")
                     .lectureDateTime(LocalDateTime.of(2024, 10, 1, 10, 0))
@@ -23,6 +25,7 @@ public class LectureRepositoryStub implements LectureRepository {
                     .build(),
             Lecture
                     .builder()
+                    .id(2L)
                     .title("항해 일요 특강")
                     .description("멘토링 세션")
                     .lectureDateTime(LocalDateTime.of(2023, 10, 2, 10, 0))
@@ -47,5 +50,13 @@ public class LectureRepositoryStub implements LectureRepository {
     @Override
     public Lecture save(Lecture lecture) {
         return lecture;
+    }
+
+    @Override
+    public Lecture getLectureForApply(Long lectureId) {
+        return lectures.stream()
+                .filter(lecture -> lecture.getId().equals(lectureId))
+                .findFirst()
+                .orElseThrow(() -> new LectureNotFoundException("해당하는 강의가 없습니다."));
     }
 }
