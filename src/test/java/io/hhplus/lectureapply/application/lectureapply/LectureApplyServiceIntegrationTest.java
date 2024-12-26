@@ -96,5 +96,26 @@ public class LectureApplyServiceIntegrationTest {
         assertThat(updatedLecture.getCurrentParticipants()).isEqualTo(30); // 최대 30명만 성공
     }
 
+    @Test
+    @Transactional
+    void 동일한_유저가_같은_특강에_5번_신청하면_1번만_성공한다() {
+        // given
+        Long lectureId = lecture.getId();
+        Long participantId = 1L; // 동일한 유저 ID
+        LocalDateTime currentDateTime = LocalDateTime.of(2024, 12, 2, 10, 0);
 
+        // when
+        int successfulApplications = 0;
+        for (int i = 0; i < 5; i++) {
+            try {
+                lectureApplyService.apply(lectureId, participantId, currentDateTime);
+                successfulApplications++;
+            } catch (Exception ignored) {
+                ignored.printStackTrace();
+            }
+        }
+
+        // then
+        assertThat(successfulApplications).isEqualTo(1); // 동일한 유저는 1번만 성공
+    }
 }
