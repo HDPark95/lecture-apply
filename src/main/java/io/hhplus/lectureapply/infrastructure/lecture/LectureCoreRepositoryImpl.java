@@ -46,7 +46,7 @@ public class LectureCoreRepositoryImpl implements LectureRepository {
     public Lecture getLectureForApply(Long lectureId) {
         return Optional.ofNullable(
                 jpaQueryFactory.selectFrom(lecture)
-                        .innerJoin(lecture.lecturer, lecture.lecturer).fetchJoin()
+                        .innerJoin(lecture.lecturer, lecturer).fetchJoin()
                         .where(lecture.id.eq(lectureId))
                         .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                         .fetchOne()
