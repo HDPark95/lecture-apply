@@ -3,6 +3,7 @@ package io.hhplus.lectureapply.domain.lecture;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface LectureRepository {
 
@@ -11,4 +12,6 @@ public interface LectureRepository {
     List<Lecture> findAvailableLectures(LocalDate targetDate, LocalDateTime currentTime);
 
     Lecture save(Lecture lecture);
+
+    Optional<Lecture> findById(Long lectureId);
 }

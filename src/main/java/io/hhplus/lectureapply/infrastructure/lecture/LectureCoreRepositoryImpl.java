@@ -54,4 +54,9 @@ public class LectureCoreRepositoryImpl implements LectureRepository {
                 () -> new LectureNotFoundException("해당하는 강의가 없습니다.")
         );
     }
+
+    @Override
+    public Optional<Lecture> findById(Long lectureId) {
+        return lectureJpaRepository.findById(lectureId);
+    }
 }

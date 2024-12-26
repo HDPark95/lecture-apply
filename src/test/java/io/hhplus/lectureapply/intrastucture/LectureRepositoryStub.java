@@ -8,6 +8,7 @@ import io.hhplus.lectureapply.domain.lecturer.Lecturer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class LectureRepositoryStub implements LectureRepository {
 
@@ -58,5 +59,15 @@ public class LectureRepositoryStub implements LectureRepository {
                 .filter(lecture -> lecture.getId().equals(lectureId))
                 .findFirst()
                 .orElseThrow(() -> new LectureNotFoundException("해당하는 강의가 없습니다."));
+    }
+
+    @Override
+    public Optional<Lecture> findById(Long lectureId) {
+        return Optional.ofNullable(
+                lectures.stream()
+                        .filter(lecture -> lecture.getId().equals(lectureId))
+                        .findFirst()
+                        .orElse(null)
+        );
     }
 }
