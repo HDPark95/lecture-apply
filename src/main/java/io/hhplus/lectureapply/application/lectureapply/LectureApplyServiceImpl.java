@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +31,10 @@ public class LectureApplyServiceImpl implements LectureApplyService {
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateLectureApplyException("이미 신청한 강의입니다.");
         }
+    }
+
+    @Override
+    public List<LectureApply> getLectureApply(Long participantId) {
+        return lectureApplyRepository.findAllByParticipantId(participantId);
     }
 }

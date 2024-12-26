@@ -8,6 +8,7 @@ import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import static io.hhplus.lectureapply.domain.lecture.QLecture.lecture;
@@ -23,4 +24,8 @@ public class LectureApplyCoreRepository implements LectureApplyRepository {
         return lectureApplyJpaRepository.save(lectureApply);
     }
 
+    @Override
+    public List<LectureApply> findAllByParticipantId(Long participantId) {
+        return lectureApplyJpaRepository.findAllByParticipantId(participantId);
+    }
 }
