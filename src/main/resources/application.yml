@@ -7,8 +7,9 @@ spring:
     username: lecture
     password: hhplus1234!@
   jpa:
+    hibernate:
+      ddl-auto: update
     open-in-view: false
-    properties:
-      hibernate:
-        ddl-auto: update
-        show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+
